@@ -3,6 +3,9 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import { connect } from 'react-redux'
+import { selectedAlbum } from '../actions/index'
+import {Link, Redirect} from 'react-router-dom'
 
 var styles = {
     card: {
@@ -32,19 +35,21 @@ class AlbumItem extends Component {
             currency: 'IDR',
           });
 
-        var {album_name, album_artist, picture, price} = this.props.barang
+        var {album_id, album_name, album_artist, picture, price} = this.props.barang
         
         price = formatter.format(price)
 
         return (
             <div style = {{'font-size': 14}}>
                 <Card style = {{...styles.card}}>
-                <CardActionArea href='/album'>
+                <Link to="/album">
+                <CardActionArea onClick = {() => {this.props.selectedAlbum(album_id)}}>
                     <CardMedia
                     style = {{...styles.media}}
                     image={picture}
                     />
                 </CardActionArea>
+                </Link>
                 </Card>
 
                 <div style = {{...styles.center}}>
@@ -59,6 +64,12 @@ class AlbumItem extends Component {
             </div>
         )
     }
-} 
+}
 
-export default AlbumItem
+const mapState = (state) => {
+    return {
+        album: state.album
+    }
+}
+
+export default connect(mapState,{selectedAlbum})(AlbumItem)
