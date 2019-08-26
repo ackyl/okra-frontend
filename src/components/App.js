@@ -1,0 +1,23 @@
+import React, { Component } from 'react'
+import { BrowserRouter, Route } from 'react-router-dom'
+import Home from './Home'
+import Header from './Header'
+import AlbumPage from './AlbumPage'
+
+class App extends Component {
+
+    render() {
+        return (
+            <BrowserRouter>
+                <Header/>
+                <Route path='/' exact component={Home}/>
+                <Route path='/album' component={AlbumPage}/>
+                {/* <Route path='/register' component={Register}/>
+                <Route path='/login' component={Login}/>
+                <Route path='/profile' component={Profile}/> */}
+            </BrowserRouter>
+        )
+    }
+}
+
+export default App
