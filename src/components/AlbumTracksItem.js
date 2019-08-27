@@ -9,8 +9,10 @@ class AlbumTracksItem extends Component {
 
         return (
             <div>
-                {track_number}. {track_name}
-                <audio src={mp3} controls/>
+                <div style = {{fontSize: 16}}>
+                    {track_number}. {track_name}
+                </div>
+                <audio src={mp3} controls style={{display: 'block'}} />
             </div>
         )
     }

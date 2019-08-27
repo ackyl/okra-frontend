@@ -11,7 +11,7 @@ var styles = {
     card: {
         width: 200,
         height: 200,
-        margin: 20,
+        marginLeft: 20,
         marginTop: 25
     },
     media: {

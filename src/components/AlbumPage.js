@@ -9,11 +9,14 @@ import Grid from '@material-ui/core/Grid';
 
 var styles = {
     root: {
-      flexGrow: 1,
-      marginTop: 20
+        flexGrow: 1,
+        marginTop: 20
     },
-    paper: {
-      textAlign: 'center'
+    left: {
+        textAlign: 'left'
+    },
+    right: {
+        textAlign: 'center'
     }
 }
 
@@ -76,18 +79,20 @@ class AlbumPage extends Component {
         }else{
         return (
             <div style = {{...styles.root}}>
-            <Grid container spacing={3}>
+            <Grid container spacing={10}>
 
-                <Grid item xs={6}>
-                    <Paper style = {{...styles.paper}}>
-                        {this.renderTracks()}
-                    </Paper>
+                <Grid item xs={3}>
                 </Grid>
 
-                <Grid item xs={6}>
-                    <Paper style = {{...styles.paper}}>
-                        {wait}
-                    </Paper>
+                <Grid item xs={3} style = {{...styles.left}}>
+                    {this.renderTracks()}
+                </Grid>
+
+                <Grid item xs={3} style = {{...styles.right}}>
+                    {wait}
+                </Grid>
+
+                <Grid item xs={3}>
                 </Grid>
 
             </Grid>

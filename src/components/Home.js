@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import AlbumItem from './AlbumItem'
+import { connect } from 'react-redux'
 
 class Home extends Component {
 
