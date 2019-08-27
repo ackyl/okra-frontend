@@ -9,6 +9,7 @@ import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
+import {Link, Redirect} from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -71,7 +72,9 @@ export default function Header() {
       {/* <AppBar position="static" className={classes.bg}> */}
         <Toolbar className={classes.bg}>
           <Typography variant="h6" className={classes.title}>
+            <Link to="/">
               Okra Record Store
+            </Link>
           </Typography>
 
           <div className={classes.search}>

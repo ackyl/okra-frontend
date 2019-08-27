@@ -5,23 +5,23 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux'
 import { selectedAlbum } from '../actions/index'
-import {Link, Redirect} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 var styles = {
     card: {
         width: 200,
         height: 200,
         margin: 20,
-        'margin-top': 25
+        marginTop: 25
     },
     media: {
         height: 200,
         width: 200
     },
     center: {
-        'text-align': 'center',
+        textAlign: 'center',
         width: 200,
-        'margin-left': 20
+        marginLeft: 20
     }
 }
 
@@ -40,7 +40,7 @@ class AlbumItem extends Component {
         price = formatter.format(price)
 
         return (
-            <div style = {{'font-size': 14}}>
+            <div style = {{fontSize: 14}}>
                 <Card style = {{...styles.card}}>
                 <Link to="/album">
                 <CardActionArea onClick = {() => {this.props.selectedAlbum(album_id)}}>
@@ -53,7 +53,7 @@ class AlbumItem extends Component {
                 </Card>
 
                 <div style = {{...styles.center}}>
-                    <Typography variant="p" component="p">
+                    <Typography variant="subtitle2">
                         {album_artist} - {album_name}
                     </Typography>
                     <Typography variant="body2" component="h3" style={{color: 'red'}}>

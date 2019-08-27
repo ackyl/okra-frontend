@@ -1,28 +1,15 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-
 import AlbumItem from './AlbumItem'
-import AlbumTracksItem from './AlbumTracksItem'
-// import {connect} from 'react-redux'
-// import {Redirect} from 'react-router-dom'
 
 class Home extends Component {
 
     state = {
-        albums: [],
-        tracks: []
+        albums: []
     }
 
     componentDidMount(){
         this.getAlbum()
-        this.getAlbumTracks()
-    }
-
-    getAlbumTracks = () => {
-        axios.get('http://localhost:2019/tracks/1')
-            .then(res => {
-                this.setState({tracks: res.data})
-            })
     }
 
     getAlbum = () => {
@@ -34,21 +21,12 @@ class Home extends Component {
 
     renderList = () => {
 
-        return this.state.albums.map(item => {
+        return this.state.albums.map( (item, key) => {
             return (
-                <AlbumItem barang={item}/>
+                <AlbumItem barang={item} key={key}/>
             )
         })
 
-    }
-
-    renderTracks = () => {
-        return this.state.tracks.map(item => {
-            console.log(item)
-            return (
-                <AlbumTracksItem barang={item}/>
-            )
-        })
     }
 
     render() {
@@ -56,7 +34,7 @@ class Home extends Component {
 
             <div className="row">
 
-                <div className="col" style={{'margin-left': 30, 'margin-top': 25}}>
+                <div className="col" style={{marginLeft: 30, marginTop: 25}}>
 
                         <div className="mx-auto card">
                             <div className="card-body">
@@ -80,7 +58,6 @@ class Home extends Component {
 
                 <div className="row col-10">
                     {this.renderList()}
-                    {this.renderTracks()}
                 </div>
 
             </div>
