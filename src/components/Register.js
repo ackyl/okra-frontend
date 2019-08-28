@@ -1,10 +1,19 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {Link, Redirect} from 'react-router-dom'
-import {login} from '../actions/index'
+import {onRegisterUser} from '../actions/index'
 
 
-class Login extends Component {
+class Register extends Component {
+
+    onButtonClick = () => {
+        const user = this.username.value
+        const pass = this.password.value
+        const name = this.name.value
+        const email = this.email.value
+
+        this.props.onRegisterUser(user,name,email,pass)
+    }
 
     render() {
         return (
@@ -22,8 +31,18 @@ class Login extends Component {
                             <h4>Password</h4>
                         </div>
                         <form className="input-group"><input ref={input => this.password = input} className="form-control" type="password"/></form>
+                        <div className="card-title mt-1">
+                            <h4>Full Name</h4>
+                        </div>
+                        <form className="input-group"><input ref={input => this.name = input} className="form-control" type="text"/></form>
+                        <div className="card-title mt-1">
+                            <h4>Email</h4>
+                        </div>
+                        <form className="input-group"><input ref={input => this.email = input} className="form-control" type="text"/></form>
                         <div className="d-flex justify-content-center my-3">
                         </div>
+
+                        <button className="btn btn-success btn-block" onClick={this.onButtonClick}>Register</button>
                     </div>
                 </div>
             </div>
@@ -37,4 +56,4 @@ const mapState = (state) => {
     }
 }
 
-export default connect(mapState,{login})(Login)
+export default connect(mapState,{onRegisterUser})(Register)

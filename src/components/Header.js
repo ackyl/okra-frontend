@@ -8,7 +8,8 @@ import {Link, Redirect} from 'react-router-dom'
 import { connect } from 'react-redux'
 import Button from '@material-ui/core/Button';
 import InputBase from '@material-ui/core/InputBase';
-import {login} from '../actions/index'
+import {onLogin} from '../actions/index'
+import TextField from '@material-ui/core/TextField';
 
 var styles = {
   root: {
@@ -30,12 +31,19 @@ var styles = {
 
 class Header extends Component {
 
+  onButtonClick = () => {
+    const username = this.username.value
+    const password = this.password.value
+
+    this.props.onLogin(username,password)
+  }
+
   componentDidMount(){
     console.log(this.props.user)
   }
 
   render(){
-    if(this.props.user.id == 'test'){
+    if(this.props.user.id !== ''){
       return(
         <div style={{...styles.root}}>
             <Toolbar style={{...styles.bg}}>
@@ -76,18 +84,21 @@ class Header extends Component {
               <InputBase
                 placeholder="Username"
                 inputProps={{ 'aria-label': 'search' }}
+                inputRef={input => this.username = input}
               />
 
               <InputBase
                 placeholder="Password"
                 inputProps={{ 'aria-label': 'search' }}
+                type='password'
+                inputRef={input => this.password = input}
               />
 
               <Link to="/register">
                 <Button color="inherit">Register</Button>
               </Link>
 
-              <Link to="/" onClick = {() => {this.props.login('test')}}>
+              <Link to="/" onClick={this.onButtonClick}>
                 <Button color="inherit">Login</Button>
               </Link>
   
@@ -107,4 +118,4 @@ const mapState = (state) => {
     }
 }
 
-export default connect(mapState, {login})(Header)
+export default connect(mapState, {onLogin})(Header)

@@ -34,7 +34,7 @@ class AlbumPage extends Component {
     }
 
     getAlbumTracks = () => {
-        if(this.props.album.id != ''){
+        if(this.props.album.id !== ''){
             axios.get(`http://localhost:2019/tracks/${this.props.album.id}`)
                 .then(res => {
                     this.setState({tracks: res.data})
@@ -43,7 +43,7 @@ class AlbumPage extends Component {
     }
 
     getAlbumDetails = () => {
-        if(this.props.album.id != ''){
+        if(this.props.album.id !== ''){
             axios.get(`http://localhost:2019/album/${this.props.album.id}`)
                 .then(res => {
                     this.setState({album1: res.data})

@@ -3,7 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom'
 import Home from './Home'
 import Header from './Header'
 import AlbumPage from './AlbumPage'
-import Login from './Login'
+import Register from './Register'
 
 class App extends Component {
 
@@ -13,10 +13,7 @@ class App extends Component {
                 <Header/>
                 <Route path='/' exact component={Home}/>
                 <Route path='/album' component={AlbumPage}/>
-                <Route path='/register' component={Login}/>
-                {/* <Route path='/register' component={Register}/>
-                <Route path='/login' component={Login}/>
-                <Route path='/profile' component={Profile}/> */}
+                <Route path='/register' component={Register}/>
             </BrowserRouter>
         )
     }
