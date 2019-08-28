@@ -143,7 +143,14 @@ export const stayLogin = (user) => {
     
     return {
         type: 'LOGIN_SUCCESS',
-        payload: {id: user.id, username: user.username}
+        payload: {user_id: user.user_id, username: user.username}
+    }
+}
+
+export const onLogout = () => {
+    return dispatch => {
+        cookie.remove('login')
+        dispatch({ type: 'LOGOUT'})
     }
 }
 
