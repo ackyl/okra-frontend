@@ -29,71 +29,40 @@ export const onRegisterUser = (username,name,email,password) => {
                         axios.post('http://localhost:2019/users', {
                             username,name,email,password,user_type,profile_picture
                         }).then(res => {
-                            // Render success message
+                            
+                            const user_id = parseInt(res.data)
+
+                            cookie.set('login', {user_id, username, user_type}, {path:"/"})
+
                             dispatch({
-                                type: 'AUTH_SUCCESS',
-                                payload: "Registration Succeeded"
+                                type: 'REGISTER_SUCCESS',
+                                payload: {user_id: user_id, username: username, user_type: user_type}
                             })
-                            // Clean success message
-                            setTimeout(() => {
-                                dispatch({
-                                    type: 'AUTH_NO_MESS'
-                                })
-                            }, 3000);
                         }).catch(err => {
-                            // Render error message, system error
                             dispatch({
-                                type: 'AUTH_ERROR',
+                                type: 'REGISTER_ERROR',
                                 payload: "System Error"
                             })
-                            // Clean success message
-                            setTimeout(() => {
-                                dispatch({
-                                    type: 'AUTH_NO_MESS'
-                                })
-                            }, 2000);
                         })
                     } else {
-                        // Render error message, username taken
+
                         dispatch({
-                            type: 'AUTH_ERROR',
+                            type: 'REGISTER_ERROR',
                             payload: "Email has been taken"
                         })
-                        // Clean error message
-                        setTimeout(() => {
-                            dispatch({
-                                type: 'AUTH_NO_MESS'
-                            })
-                        }, 2000);
                     }
-                })
-
-                
+                }) 
             } else {
-                // Render error message, username taken
                 dispatch({
-                    type: 'AUTH_ERROR',
+                    type: 'REGISTER_ERROR',
                     payload: "Username has been taken"
                 })
-                // Clean error message
-                setTimeout(() => {
-                    dispatch({
-                        type: 'AUTH_NO_MESS'
-                    })
-                }, 2000);
             }
         }).catch(err => {
-            // Render error message, system error
             dispatch({
-                type: 'AUTH_ERROR',
+                type: 'REGISTER_ERROR',
                 payload: "System Error"
             })
-            // Clean error message
-            setTimeout(() => {
-                dispatch({
-                    type: 'AUTH_NO_MESS'
-                })
-            }, 2000);
         })
     }
 }
@@ -110,19 +79,15 @@ export const onLogin = (username,password) => {
         })
             .then(res => {
 
-                console.log(res.data.user_id)
-
                 if(res.data.user_id !== undefined){
                     
-                    const { user_id, username } = res.data
+                    const { user_id, username, user_type } = res.data
 
-                    cookie.set('login', {user_id, username}, {path:"/"})
-
-                    console.log("Login Success")
+                    cookie.set('login', {user_id, username, user_type}, {path:"/"})
 
                     dispatch({
                         type: 'LOGIN_SUCCESS',
-                        payload: { user_id, username }
+                        payload: { user_id, username, user_type}
                     })
                 } else {
                     dispatch({
@@ -143,7 +108,7 @@ export const stayLogin = (user) => {
     
     return {
         type: 'LOGIN_SUCCESS',
-        payload: {user_id: user.user_id, username: user.username}
+        payload: {user_id: user.user_id, username: user.username, user_type: user.user_type}
     }
 }
 

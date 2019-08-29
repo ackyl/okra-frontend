@@ -55,12 +55,14 @@ class Header extends Component {
                   Okra Record Store
                 </Link>
               </Typography>
-  
+
+              <Link to='/cart'>
               <IconButton color="inherit">
                   <ShoppingCart />
               </IconButton>
+              </Link>
               
-              <Button color="inherit">Edit Profile</Button>
+              <Link to='/profile'><Button color="inherit">Edit Profile</Button></Link>
               <Button color="inherit" onClick={this.onClickLogout}>Logout</Button>
   
             </Toolbar>

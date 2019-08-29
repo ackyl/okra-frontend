@@ -8,6 +8,8 @@ import Home from './Home'
 import Header from './Header'
 import AlbumPage from './AlbumPage'
 import Register from './Register'
+import ProfilePage from './ProfilePage'
+import CartPage from './CartPage'
 
 const cookie = new cookies()
 
@@ -30,6 +32,8 @@ class App extends Component {
                 <Route path='/' exact component={Home}/>
                 <Route path='/album' component={AlbumPage}/>
                 <Route path='/register' component={Register}/>
+                <Route path='/profile' component={ProfilePage}/>
+                <Route path='/cart' component={CartPage}/>
             </BrowserRouter>
         )
     }

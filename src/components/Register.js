@@ -16,6 +16,7 @@ class Register extends Component {
     }
 
     render() {
+        if(this.props.user.user_id == ''){
         return (
             <div className="mt-5 row">
                 <div className="col-sm-3 mx-auto card">
@@ -46,7 +47,11 @@ class Register extends Component {
                     </div>
                 </div>
             </div>
-        )
+        )}else{
+            return(
+                <Redirect to='/'></Redirect>
+            )
+        }
     }
 }
 
