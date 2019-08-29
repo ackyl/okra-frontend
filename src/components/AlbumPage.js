@@ -3,22 +3,8 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import {Redirect} from 'react-router-dom'
 import AlbumTracksItem from './AlbumTracksItem'
-
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 
-var styles = {
-    root: {
-        flexGrow: 1,
-        marginTop: 20
-    },
-    left: {
-        textAlign: 'left'
-    },
-    right: {
-        textAlign: 'center'
-    }
-}
 
 class AlbumPage extends Component {
 
@@ -67,10 +53,9 @@ class AlbumPage extends Component {
 
             <div>
                 <img src={album1[0].picture}/>
-                <h4>{album1[0].album_artist}</h4>
-                <h4>{album1[0].album_name}</h4>
-                <h4>{album1[0].release_year}</h4>
-                <h4>{album1[0].genre}</h4>
+                <h4 style={{marginTop: 10}}>{album1[0].album_artist}</h4>
+                <h4 style={{marginTop: 10}}>{album1[0].album_name}</h4>
+                <div style={{marginTop: 10}}>{album1[0].release_year}, {album1[0].genre}</div>
             </div>
 
         ) : (<div></div>)
@@ -81,24 +66,16 @@ class AlbumPage extends Component {
             )
         }else{
         return (
-            <div style = {{...styles.root}}>
-            <Grid container spacing={10}>
+            <div className='row' style = {{width: '100%'}}>
 
-                <Grid item xs={3}>
-                </Grid>
-
-                <Grid item xs={3} style = {{...styles.left}}>
-                    {this.renderTracks()}
-                </Grid>
-
-                <Grid item xs={3} style = {{...styles.right}}>
+                <div className='col-4' style={{marginTop: 25, textAlign: 'center'}}>
                     {wait}
-                </Grid>
+                </div>
 
-                <Grid item xs={3}>
-                </Grid>
+                <div>
+                    {this.renderTracks()}
+                </div>
 
-            </Grid>
             </div>
         )
         }
