@@ -67,7 +67,10 @@ class AlbumPage extends Component {
 
             <div>
                 <img src={album1[0].picture}/>
-                <h4>{album1[0].album_artist} - {album1[0].album_name}</h4>
+                <h4>{album1[0].album_artist}</h4>
+                <h4>{album1[0].album_name}</h4>
+                <h4>{album1[0].release_year}</h4>
+                <h4>{album1[0].genre}</h4>
             </div>
 
         ) : (<div></div>)

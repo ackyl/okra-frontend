@@ -35,34 +35,61 @@ class AlbumItem extends Component {
             currency: 'IDR',
           });
 
-        var {album_id, album_name, album_artist, picture, price} = this.props.barang
+        var {album_id, album_name, album_artist, picture, price, stock} = this.props.barang
         
         price = formatter.format(price)
 
-        return (
-            <div style = {{fontSize: 14}}>
-                <Card style = {{...styles.card}}>
-                <Link to="/album">
-                <CardActionArea onClick = {() => {this.props.selectedAlbum(album_id)}}>
-                    <CardMedia
-                    style = {{...styles.media}}
-                    image={picture}
-                    />
-                </CardActionArea>
-                </Link>
-                </Card>
+        if(stock>0){
+            return (
+                <div style = {{fontSize: 14}}>
+                    <Card style = {{...styles.card}}>
+                    <Link to="/album">
+                    <CardActionArea onClick = {() => {this.props.selectedAlbum(album_id)}}>
+                        <CardMedia
+                        style = {{...styles.media}}
+                        image={picture}
+                        />
+                    </CardActionArea>
+                    </Link>
+                    </Card>
 
-                <div style = {{...styles.center}}>
-                    <Typography variant="subtitle2">
-                        {album_artist} - {album_name}
-                    </Typography>
-                    <Typography variant="body2" component="h3" style={{color: 'red'}}>
-                        {price}
-                    </Typography>
+                    <div style = {{...styles.center}}>
+                        <Typography variant="subtitle2">
+                            {album_artist} - {album_name}
+                        </Typography>
+                        <Typography variant="body2" component="h3" style={{color: '#008e76'}}>
+                            {price}
+                        </Typography>
+                    </div>
+                    
                 </div>
-                
-            </div>
-        )
+            )
+        }else{
+            return (
+                <div style = {{fontSize: 14}}>
+                    <Card style = {{...styles.card}}>
+                    <Link to="/album">
+                    <CardActionArea onClick = {() => {this.props.selectedAlbum(album_id)}}>
+                        <CardMedia
+                        style = {{...styles.media}}
+                        image={picture}
+                        />
+                    </CardActionArea>
+                    </Link>
+                    </Card>
+
+                    <div style = {{...styles.center}}>
+                        <Typography variant="subtitle2">
+                            {album_artist} - {album_name}
+                        </Typography>
+                        <Typography variant="body2" component="h3" style={{color: 'grey'}}>
+                            Out of Stock
+                        </Typography>
+                    </div>
+                    
+                </div>
+            )
+        }
     }
 }
 

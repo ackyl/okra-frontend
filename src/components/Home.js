@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import AlbumItem from './AlbumItem'
 import { connect } from 'react-redux'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
 
 class Home extends Component {
 
@@ -30,28 +32,54 @@ class Home extends Component {
 
     }
 
+    onSearch = () => {
+        const artist = this.artist.value
+        const album = this.album.value
+        const genre = this.genre.value
+        const min = this.min.value
+        const max = this.max.value
+        console.log(artist+album+genre+min+max)
+    }
+
     render() {
         return (
 
-            <div className="row">
+            <div className="row" style={{width: '100%'}}>
 
-                <div className="col" style={{marginLeft: 30, marginTop: 25}}>
+                <div className="col-2" style={{marginLeft: 30, marginTop: 25}}>
 
                         <div className="mx-auto card">
                             <div className="card-body">
-                                <div className="card-title mt-1">
-                                    Genre
-                                </div>
-                                <form className="input-group"><input ref={input => this.name = input} className="form-control" type="text"/></form>
-                                
-                                <div className="card-title mt-1">
-                                    Price
-                                </div>
-                                
-                                <form className="input-group"><input placeholder="Minimum" ref={input => this.min = input} className="form-control mb-2" type="text" /></form>
-                                <form className="input-group"><input placeholder="Maximum" ref={input => this.max = input} className="form-control" type="text" /></form>
-                                
-                                <button onClick={this.onBtnSearch} className="btn btn-outline-secondary btn-block mt-5">Filter</button>
+
+                            <TextField
+                                label="Artist" margin="dense" variant="outlined"
+                                inputRef={input => this.artist = input}
+                            />
+
+                            <TextField
+                                label="Album" margin="dense" variant="outlined"
+                                inputRef={input => this.album = input}
+                            />
+
+                            <TextField
+                                label="Genre" margin="dense" variant="outlined"
+                                inputRef={input => this.genre = input}
+                            />
+
+                            <TextField
+                                label="Minimum Price" margin="dense" variant="outlined"
+                                inputRef={input => this.min = input}
+                            />
+
+                            <TextField
+                                label="Maximum Price" margin="dense" variant="outlined"
+                                inputRef={input => this.max = input}
+                            />
+
+                            <Button variant="contained" onClick={this.onSearch} style={{backgroundColor: '#004d40', color: 'white', width: '100%', marginTop: 15}}>
+                                Filter
+                            </Button>
+                            
                             </div>
                         </div>
 

@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import ShoppingCart from '@material-ui/icons/ShoppingCart';
-import {Link, Redirect} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import { connect } from 'react-redux'
 import Button from '@material-ui/core/Button';
 import InputBase from '@material-ui/core/InputBase';
@@ -16,6 +13,7 @@ var styles = {
   },
   title: {
     flexGrow: 1,
+    marginLeft: 10
   },
   bg: {
     background: '#ffffff',
@@ -51,19 +49,14 @@ class Header extends Component {
         <div style={{...styles.root}}>
             <Toolbar style={{...styles.bg}}>
               <Typography variant="h6" style={{...styles.title}}>
-                <Link to="/">
+                <Link to="/" style={{color: '#004d40'}}>
                   Okra Record Store
                 </Link>
               </Typography>
 
-              <Link to='/cart'>
-              <IconButton color="inherit">
-                  <ShoppingCart />
-              </IconButton>
-              </Link>
-              
-              <Link to='/profile'><Button color="inherit">Edit Profile</Button></Link>
-              <Button color="inherit" onClick={this.onClickLogout}>Logout</Button>
+              <Link to='/cart' style={{color: '#004d40'}}><Button color="inherit">Cart</Button></Link>
+              <Link to='/profile' style={{color: '#004d40'}}><Button color="inherit">Edit Profile</Button></Link>
+              <Button color="inherit" onClick={this.onClickLogout} style={{color: '#004d40'}}>Logout</Button>
   
             </Toolbar>
   
@@ -76,7 +69,7 @@ class Header extends Component {
         <div style={{...styles.root}}>
             <Toolbar style={{...styles.bg}}>
               <Typography variant="h6" style={{...styles.title}}>
-                <Link to="/">
+                <Link to="/" style={{color: '#004d40'}}>
                   Okra Record Store
                 </Link>
               </Typography>
@@ -94,14 +87,14 @@ class Header extends Component {
                 inputRef={input => this.password = input}
               />
 
-              <Link to="/register">
+              <Link to="/" onClick={this.onClickLogin} style={{color: '#004d40'}}>
+                <Button color="inherit">Login</Button>
+              </Link>
+
+              <Link to="/register" style={{color: '#004d40'}}>
                 <Button color="inherit">Register</Button>
               </Link>
 
-              <Link to="/" onClick={this.onClickLogin}>
-                <Button color="inherit">Login</Button>
-              </Link>
-  
             </Toolbar>
 
             <div style={{...styles.stripe}}>
