@@ -33,7 +33,7 @@ class AlbumTracksItem extends Component {
             return (
                 <div>
                     <IconButton>
-                        <Play onClick={this.playTrack}/>
+                        <Play onClick={this.playTrack} style={{color: 'white'}}/>
                     </IconButton>
                         {track_number}. {track_name} <audio ref={this.player} src={mp3}/>                
                 </div>
@@ -42,7 +42,7 @@ class AlbumTracksItem extends Component {
             return (
                 <div>
                     <IconButton>
-                        <Pause onClick={this.pauseTrack}/>
+                        <Pause onClick={this.pauseTrack} style={{color: 'white'}}/>
                     </IconButton>
                         {track_number}. {track_name} <audio ref={this.player} src={mp3}/>                
                 </div>

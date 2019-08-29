@@ -39,6 +39,12 @@ class AlbumItem extends Component {
         
         price = formatter.format(price)
 
+        const min = 1
+        const max = 7
+        const rand = parseInt(min + Math.random() * (max - min))
+
+        console.log(rand)
+
         if(stock>0){
             return (
                 <div style = {{fontSize: 14}}>
@@ -69,11 +75,13 @@ class AlbumItem extends Component {
                 <div style = {{fontSize: 14}}>
                     <Card style = {{...styles.card}}>
                     <Link to="/album">
-                    <CardActionArea onClick = {() => {this.props.selectedAlbum(album_id)}}>
-                        <CardMedia
-                        style = {{...styles.media}}
-                        image={picture}
-                        />
+                    <CardActionArea
+                        onClick = {() => {this.props.selectedAlbum(album_id)}}
+                        style={{position: 'relative', textAlign: 'center'}}
+                    >
+
+                        <img src={picture} style={{width: 200, height: 200, opacity: 0.5}}/>
+                        <div style={{position: 'absolute', top:'50%', left: '50%', transform: 'translate(-50%, -50%)', color: 'red', fontWeight: 'bold'}}>OUT OF STOCK</div>
                     </CardActionArea>
                     </Link>
                     </Card>
@@ -83,7 +91,7 @@ class AlbumItem extends Component {
                             {album_artist} - {album_name}
                         </Typography>
                         <Typography variant="body2" component="h3" style={{color: 'grey'}}>
-                            Out of Stock
+                            {price}
                         </Typography>
                     </div>
                     

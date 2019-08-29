@@ -8,7 +8,8 @@ import Button from '@material-ui/core/Button'
 class Home extends Component {
 
     state = {
-        albums: []
+        albums: [],
+        filtered: []
     }
 
     componentDidMount(){
@@ -19,12 +20,19 @@ class Home extends Component {
         axios.get('http://localhost:2019/album')
             .then(res => {
                this.setState({albums: res.data})
+               this.setState({filtered: res.data})
             })
+    }
+
+    sortPrice = (a,b) => {
+        if(a.price<b.price) return -1
+        if(a.price>b.price) return 1
+        return 0
     }
 
     renderList = () => {
 
-        return this.state.albums.map( (item, key) => {
+        return this.state.filtered.map( (item, key) => {
             return (
                 <AlbumItem barang={item} key={key}/>
             )
@@ -33,17 +41,48 @@ class Home extends Component {
     }
 
     onSearch = () => {
-        const artist = this.artist.value
-        const album = this.album.value
+        const album_artist = this.artist.value
+        const album_name = this.album.value
         const genre = this.genre.value
         const min = this.min.value
         const max = this.max.value
-        console.log(artist+album+genre+min+max)
+
+        var x = this.state.albums
+        
+        x = x.filter(item=>{
+            if(item.album_artist.toLowerCase().includes(album_artist.toLowerCase()))
+                return true
+        })
+
+        x = x.filter(item=>{
+            if(item.album_name.toLowerCase().includes(album_name.toLowerCase()))
+                return true
+        })
+
+        x = x.filter(item=>{
+            if(item.genre.toLowerCase().includes(genre.toLowerCase()))
+                return true
+        })
+
+        x = x.filter(item=>{
+            if(min === '')
+                return true
+            else
+                return item.price >= min
+        })
+
+        x = x.filter(item=>{
+            if(max === '')
+                return true
+            else
+                return item.price <= max
+        })
+
+        this.setState({filtered: x})
     }
 
     render() {
         return (
-
             <div className="row" style={{width: '100%'}}>
 
                 <div className="col-2" style={{marginLeft: 30, marginTop: 25}}>

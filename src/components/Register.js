@@ -43,7 +43,7 @@ class Register extends Component {
                         <div className="d-flex justify-content-center my-3">
                         </div>
 
-                        <button className="btn btn-success btn-block" onClick={this.onButtonClick}>Register</button>
+                        <button className="btn btn-success btn-block" onClick={this.onButtonClick} style={{backgroundColor: '#004d40'}}>Register</button>
                     </div>
                 </div>
             </div>

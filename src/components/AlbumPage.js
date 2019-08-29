@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import {Redirect} from 'react-router-dom'
 import AlbumTracksItem from './AlbumTracksItem'
-import Grid from '@material-ui/core/Grid';
 
 
 class AlbumPage extends Component {
@@ -49,6 +48,13 @@ class AlbumPage extends Component {
 
     render() {
         const {album1} = this.state
+
+        var min = 1;
+        var max = 7;
+        var rand =  parseInt(min + (Math.random() * (max-min)))
+
+        console.log(rand)
+
         const wait = album1 ? (
 
             <div>
@@ -72,8 +78,17 @@ class AlbumPage extends Component {
                     {wait}
                 </div>
 
-                <div>
-                    {this.renderTracks()}
+                <div className='col-8' style={{minHeight: 600,
+                        marginRight: 0,
+                        backgroundImage: `url("../img/${rand}.jpg")`,
+                        backgroundSize: '100%',
+                        backgroundPosition: 'center'
+                        }}>
+
+                    <div style={{marginTop: 25, color: 'white'}}>
+                        {this.renderTracks()}
+                    </div>
+
                 </div>
 
             </div>
