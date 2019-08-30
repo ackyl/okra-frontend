@@ -16,7 +16,7 @@ var styles = {
     marginLeft: 10
   },
   bg: {
-    background: '#ffffff',
+    background: '#004d40',
     color: '#212121'
   },
   stripe: {
@@ -49,14 +49,14 @@ class Header extends Component {
         <div style={{...styles.root}}>
             <Toolbar style={{...styles.bg}}>
               <Typography variant="h6" style={{...styles.title}}>
-                <Link to="/" style={{color: '#004d40'}}>
+                <Link to="/" style={{color: 'white'}}>
                   Okra Record Store
                 </Link>
               </Typography>
 
-              <Link to='/cart' style={{color: '#004d40'}}><Button color="inherit">Cart</Button></Link>
-              <Link to='/profile' style={{color: '#004d40'}}><Button color="inherit">Edit Profile</Button></Link>
-              <Button color="inherit" onClick={this.onClickLogout} style={{color: '#004d40'}}>Logout</Button>
+              <Link to='/cart' style={{color: 'white'}}><Button color="inherit">Cart</Button></Link>
+              <Link to='/profile' style={{color: 'white'}}><Button color="inherit">Profile</Button></Link>
+              <Button color="inherit" onClick={this.onClickLogout} style={{color: 'white'}}>Logout</Button>
   
             </Toolbar>
   
@@ -69,7 +69,7 @@ class Header extends Component {
         <div style={{...styles.root}}>
             <Toolbar style={{...styles.bg}}>
               <Typography variant="h6" style={{...styles.title}}>
-                <Link to="/" style={{color: '#004d40'}}>
+                <Link to="/" style={{color: 'white'}}>
                   Okra Record Store
                 </Link>
               </Typography>
@@ -78,6 +78,7 @@ class Header extends Component {
                 placeholder="Username"
                 inputProps={{ 'aria-label': 'search' }}
                 inputRef={input => this.username = input}
+                style={{color: 'white'}}
               />
 
               <InputBase
@@ -85,20 +86,21 @@ class Header extends Component {
                 inputProps={{ 'aria-label': 'search' }}
                 type='password'
                 inputRef={input => this.password = input}
+                style={{color: 'white'}}
               />
 
-              <Link to="/" onClick={this.onClickLogin} style={{color: '#004d40'}}>
+              <Link to="/" onClick={this.onClickLogin} style={{color: 'white'}}>
                 <Button color="inherit">Login</Button>
               </Link>
 
-              <Link to="/register" style={{color: '#004d40'}}>
+              <Link to="/register" style={{color: 'white'}}>
                 <Button color="inherit">Register</Button>
               </Link>
 
             </Toolbar>
 
-            <div style={{...styles.stripe}}>
-            </div>
+            {/* <div style={{...styles.stripe}}>
+            </div> */}
         </div>
       )
     }

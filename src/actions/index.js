@@ -32,11 +32,11 @@ export const onRegisterUser = (username,name,email,password) => {
                             
                             const user_id = parseInt(res.data)
 
-                            cookie.set('login', {user_id, username, user_type}, {path:"/"})
+                            cookie.set('login', {user_id, username, name, email, user_type, profile_picture}, {path:"/"})
 
                             dispatch({
                                 type: 'REGISTER_SUCCESS',
-                                payload: {user_id: user_id, username: username, user_type: user_type}
+                                payload: {user_id, username, name, email, user_type, profile_picture}
                             })
                         }).catch(err => {
                             dispatch({
@@ -81,13 +81,13 @@ export const onLogin = (username,password) => {
 
                 if(res.data.user_id !== undefined){
                     
-                    const { user_id, username, user_type } = res.data
+                    const { user_id, username, name, email, user_type, profile_picture } = res.data
 
-                    cookie.set('login', {user_id, username, user_type}, {path:"/"})
+                    cookie.set('login', {user_id, username, name, email, user_type, profile_picture}, {path:"/"})
 
                     dispatch({
                         type: 'LOGIN_SUCCESS',
-                        payload: { user_id, username, user_type}
+                        payload: {user_id, username, name, email, user_type, profile_picture}
                     })
                 } else {
                     dispatch({
@@ -108,7 +108,12 @@ export const stayLogin = (user) => {
     
     return {
         type: 'LOGIN_SUCCESS',
-        payload: {user_id: user.user_id, username: user.username, user_type: user.user_type}
+        payload: {user_id: user.user_id,
+            username: user.username,
+            name: user.name,
+            email: user.email,
+            user_type: user.user_type,
+            profile_picture: user.profile_picture}
     }
 }
 
@@ -116,6 +121,30 @@ export const onLogout = () => {
     return dispatch => {
         cookie.remove('login')
         dispatch({ type: 'LOGOUT'})
+    }
+}
+
+export const onUpdateProfile = (user) => {
+
+    cookie.set('login', {
+        user_id: user.user_id,
+        username: user.username,
+        name: user.name,
+        email: user.email,
+        user_type: user.user_type,
+        profile_picture: user.profile_picture
+    }, {path:"/"})
+
+    return {
+        type: 'LOGIN_SUCCESS',
+        payload: {
+            user_id: user.user_id,
+            username: user.username,
+            name: user.name,
+            email: user.email,
+            user_type: user.user_type,
+            profile_picture: user.profile_picture
+        }
     }
 }
 
