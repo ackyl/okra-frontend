@@ -43,8 +43,6 @@ class AlbumItem extends Component {
         const max = 7
         const rand = parseInt(min + Math.random() * (max - min))
 
-        console.log(rand)
-
         if(stock>0){
             return (
                 <div style = {{fontSize: 14}}>

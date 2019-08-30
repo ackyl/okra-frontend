@@ -29,7 +29,7 @@ class AlbumTracksItem extends Component {
 
         var {track_number, track_name, mp3} = this.props.barang
 
-        if(this.state.played == false){
+        if(this.state.played === false){
             return (
                 <div>
                     <IconButton>
