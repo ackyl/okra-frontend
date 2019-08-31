@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
-import CartItem from './CartItem'
 import {Redirect} from 'react-router-dom'
 import Button from '@material-ui/core/Button'
 
@@ -9,7 +8,7 @@ class CartPage extends Component {
 
     state = {
         carts: [],
-        delete: 0
+        begone: false
     }
 
     componentDidMount(){
@@ -32,6 +31,14 @@ class CartPage extends Component {
         axios.get(`http://localhost:2019/cart/${this.props.user.user_id}`)
             .then(res => {
                 this.setState({carts: res.data})
+            })
+    }
+
+    onCheckout = () => {
+        console.log(this.state.carts[0].td_id)
+        axios.patch(`http://localhost:2019/trans/${this.state.carts[0].td_id}`)
+            .then(res => {
+                this.setState({begone: true})
             })
     }
 
@@ -72,13 +79,17 @@ class CartPage extends Component {
             return(
                 <Redirect to='/'></Redirect>
             )
+        }else if(this.state.begone == true){
+            return(
+                <Redirect to='/'></Redirect>
+            )
         }else if(this.state.carts[0] !== undefined){
             return (
                 <div style = {{width: '100%', textAlign: 'center', marginTop: 0, minHeight: 800}}>
                     <div className ='row' style = {{width:'100%'}}>
                     {this.renderList()}
                     </div>
-                    <Button variant="contained" onClick={this.onDelete} style={{backgroundColor: '#004d40', color: 'white', marginTop: 60, marginBottom: 60}}>
+                    <Button variant="contained" onClick={this.onCheckout} style={{backgroundColor: '#004d40', color: 'white', marginTop: 60, marginBottom: 60}}>
                         Checkout
                     </Button>
                 </div>
