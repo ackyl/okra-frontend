@@ -45,6 +45,8 @@ class CartPage extends Component {
     renderList = () => {
         return this.state.carts.map( (item, key) => {
 
+            console.log(item.price)
+
             var formatter = new Intl.NumberFormat('en-US', {
                 style: 'currency',
                 currency: 'IDR',

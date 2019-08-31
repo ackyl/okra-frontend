@@ -1,6 +1,7 @@
 const init = {
     id: '',
-    stock: ''
+    stock: '',
+    tdid: ''
 }
 
 export default (data = init, action) => {
@@ -11,6 +12,13 @@ export default (data = init, action) => {
                 ...init,
                 id: action.payload.id,
                 stock: action.payload.stock
+            }
+
+        case 'TRANS_SELECTED':
+            return {
+                ...data,
+                ...init,
+                tdid: action.payload.tdid
             }
                 
         default:

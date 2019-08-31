@@ -156,9 +156,10 @@ export const selectedAlbum = (id, stock) => {
     }
 }
 
-export const tempo = (tempo) => {
+export const selectedTrans = (tdid) => {
+    
     return {
-        type: 'TEMPO',
-        payload: {tempo}
+        type: 'TRANS_SELECTED',
+        payload: {tdid}
     }
 }
