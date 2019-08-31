@@ -1,5 +1,6 @@
 const init = {
-    id: ''
+    id: '',
+    stock: ''
 }
 
 export default (data = init, action) => {
@@ -7,7 +8,9 @@ export default (data = init, action) => {
         case 'ALBUM_SELECTED':
             return {
                 ...data,
-                id: action.payload
+                ...init,
+                id: action.payload.id,
+                stock: action.payload.stock
             }
                 
         default:

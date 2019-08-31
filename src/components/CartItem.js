@@ -48,7 +48,7 @@ class CartItem extends Component {
                         <div style = {{fontSize: 18, fontWeight: 'bold'}}> {album_artist} - {album_name} </div>
                         <div style = {{fontSize: 16, marginTop: 5}}> {price} </div>
                         <div style = {{fontSize: 16, marginTop: 5}}> Quantity: {qty} </div>
-                        <Button variant="contained" onClick={this.onDelete} style={{backgroundColor: '#004d40', color: 'white', marginTop: 15}}>
+                        <Button variant="contained" onClick={this.onDelete} style={{backgroundColor: '#004d40', color: 'white', marginTop: 15, fontSize: 12}}>
                                 Remove From Cart
                         </Button>
                     </div>

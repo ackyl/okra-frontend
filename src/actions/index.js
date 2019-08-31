@@ -148,10 +148,10 @@ export const onUpdateProfile = (user) => {
     }
 }
 
-export const selectedAlbum = (album) => {
+export const selectedAlbum = (id, stock) => {
     
     return {
         type: 'ALBUM_SELECTED',
-        payload: album
+        payload: {id, stock}
     }
 }

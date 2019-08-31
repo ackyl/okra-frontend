@@ -18,12 +18,10 @@ class AlbumPage extends Component {
     componentDidMount(){
         this.getAlbumTracks()
         this.getAlbumDetails()
-        console.log('asd' + this.props.user.user_id)
     }
 
     onAddToCart = () => {
         const qty = this.qty.value
-        console.log(qty)
     }
 
     getAlbumTracks = () => {
@@ -53,6 +51,23 @@ class AlbumPage extends Component {
         })
     }
 
+    onAddToCart = () => {
+        const qty = this.qty.value
+        const user_id = this.props.user.user_id
+        const album_id = this.props.album.id
+
+        axios.post(`http://localhost:2019/cart`, {qty, user_id, album_id})
+            .then(res => {
+                const stock = this.props.album.stock - qty
+                
+                axios.patch(`http://localhost:2019/stock/${this.props.album.id}`, {stock})
+                    .then(res => {
+                        this.state.album1[0].stock = stock
+                        this.setState({album1: this.state.album1})
+                })
+        })
+    }
+
 
     render() {
         const {album1} = this.state
@@ -67,8 +82,8 @@ class AlbumPage extends Component {
 
             <div>
                 <img src={album1[0].picture}/>
-                <h4 style={{marginTop: 10}}>{album1[0].album_artist}</h4>
-                <h4 style={{marginTop: 10}}>{album1[0].album_name}</h4>
+                <h5 style={{marginTop: 10}}>{album1[0].album_artist}</h5>
+                <h5 style={{marginTop: 10}}>{album1[0].album_name}</h5>
                 <div style={{marginTop: 10}}>{album1[0].release_year}, {album1[0].genre}</div>
                 <div style={{marginTop: 10}}>Stock : {album1[0].stock}</div>
             </div>
@@ -102,6 +117,33 @@ class AlbumPage extends Component {
 
                 </div>
             )
+        }else if(this.props.user.user_type == 'user' && this.props.album.stock == undefined){
+            return (
+                <div className='row' style = {{width: '100%', padding: 0, margin: 0}}>
+
+                    <div className='col-4' style={{marginTop: 25, textAlign: 'center'}}>
+                        {wait}
+
+                        <Button disabled='true' variant="contained" onClick={this.onAddToCart} style={{marginTop: 20}}>
+                            Out of Stock
+                        </Button>
+                    </div>
+
+                    <div className='col-8' style={{minHeight: 600,
+                            marginRight: 0,
+                            backgroundImage: `url("../img/${rand}.jpg")`,
+                            backgroundSize: '100%',
+                            backgroundPosition: 'center'
+                            }}>
+
+                        <div style={{marginTop: 25, color: 'white'}}>
+                            {this.renderTracks()}
+                        </div>
+
+                    </div>
+
+                </div>
+            )
         }else if(this.props.user.user_type == 'user'){
             return (
                 <div className='row' style = {{width: '100%', padding: 0, margin: 0}}>
@@ -117,7 +159,7 @@ class AlbumPage extends Component {
                         />
                         </div>
 
-                        <Button variant="contained" onClick={this.onAddToCart} style={{backgroundColor: '#004d40', color: 'white', marginTop: 20}}>
+                        <Button  variant="contained" onClick={this.onAddToCart} style={{backgroundColor: '#004d40', color: 'white', marginTop: 20}}>
                             Add to Cart
                         </Button>
                     </div>

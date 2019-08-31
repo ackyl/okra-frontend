@@ -48,7 +48,7 @@ class AlbumItem extends Component {
                 <div style = {{fontSize: 14}}>
                     <Card style = {{...styles.card}}>
                     <Link to="/album">
-                    <CardActionArea onClick = {() => {this.props.selectedAlbum(album_id)}}>
+                    <CardActionArea onClick = {() => {this.props.selectedAlbum(album_id, stock)}}>
                         <CardMedia
                         style = {{...styles.media}}
                         image={picture}

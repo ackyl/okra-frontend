@@ -29,7 +29,9 @@ class CartPage extends Component {
     renderList = () => {
         return this.state.carts.map( (item, key) => {
             return (
-                <CartItem cart={item} key={key}/>
+                <div className = 'col-6'>
+                    <CartItem cart={item} key={key}/>
+                </div>
             )
         })
     }
@@ -41,9 +43,11 @@ class CartPage extends Component {
             )
         }else if(this.state.carts[0] !== undefined){
             return (
-                <div style = {{width: '100%', textAlign: 'center', marginTop: 40, minHeight: 800}}>
+                <div style = {{width: '100%', textAlign: 'center', marginTop: 0, minHeight: 800}}>
+                    <div className ='row' style = {{width:'100%'}}>
                     {this.renderList()}
-                    <Button variant="contained" onClick={this.onDelete} style={{backgroundColor: '#004d40', color: 'white', marginTop: 60}}>
+                    </div>
+                    <Button variant="contained" onClick={this.onDelete} style={{backgroundColor: '#004d40', color: 'white', marginTop: 60, marginBottom: 60}}>
                         Checkout
                     </Button>
                 </div>
