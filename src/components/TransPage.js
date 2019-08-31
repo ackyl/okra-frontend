@@ -35,9 +35,13 @@ class TransPage extends Component {
             let status = ''
             let color = ''
 
-            if(item.trans_type == 'in progress' && item.picture == null)
-                status = 'Bukti Pembayaran Belom Di Upload'
+            if(item.trans_type == 'in progress' && item.picture == null){
+                status = 'Please Upload Your Proof of Payment'
                 color = 'red'
+            }else if(item.trans_type == 'in progress' && item.picture != null){
+                status = "Proof of Payment Isn't Yet Verified"
+                color = 'yellow'
+            }
 
             var formatter = new Intl.NumberFormat('en-US', {
                 style: 'currency',
@@ -49,16 +53,12 @@ class TransPage extends Component {
 
             return (
                 <div className='col-12' key={key} style = {{textAlign: 'center', marginLeft: 0, marginTop: 40}}>    
-                    <div className='mx-auto card' style = {{width: 500, borderColor: color}}>
+                    <div className='mx-auto card' style = {{width: 500, borderColor: color, borderWidth: 2}}>
                         <Link to='/detail' onClick = {() => {this.onDetail(item.td_id)}} style={{color: 'black'}}>
                             <div style = {{fontSize: 16, fontWeight: 'bold', marginBottom: 15, marginTop: 15}}> TRANSACTION {num} </div>
-                            <ul className="list-group list-group-flush">
-                                <li className="list-group-item">
                                     <div style = {{marginTop: 0}}> Total Album: {item.total_album} </div>
                                     <div style = {{marginTop: 10}}> Total Harga: {item.total_harga} </div>
-                                    <div style = {{fontSize: 14, marginTop: 10, fontWeight: 'bold'}}> {status} </div>
-                                </li>
-                            </ul>
+                                    <div style = {{marginTop: 10, fontWeight: 'bold', marginBottom: 20}}> {status} </div>
                         </Link>
                     </div>
                 </div>

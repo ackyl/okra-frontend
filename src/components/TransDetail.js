@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import {Link, Redirect} from 'react-router-dom'
+import Button from '@material-ui/core/Button';
 
 class TransDetail extends Component {
 
@@ -69,16 +70,67 @@ class TransDetail extends Component {
             item.total_harga = formatter.format(item.total_harga)
 
             if(item.trans_type == 'in progress' && item.picture == null)
-                status = 'Bukti Pembayaran Belom Di Upload'
+                status = 'Please Upload Your Proof of Payment'
+            else if(item.trans_type == 'in progress' && item.picture != null)
+                status = "Proof of Payment Isn't Yet Verified"
 
-            return(
-                <div key={key} className='col-6' style = {{textAlign: 'left', marginLeft: 0, marginTop: 40}}>
-                    <div style = {{fontSize: 16, fontWeight: 'bold', marginBottom: 15}}> TRANSACTION {num} </div>
-                    <div style = {{marginTop: 0}}> Total Album: {item.total_album} </div>
-                    <div style = {{marginTop: 10}}> Total Harga: {item.total_harga} </div>
-                    <div style = {{fontSize: 14, marginTop: 10, fontWeight: 'bold'}}>{status} </div>
-                </div>
-            )
+            if(item.picture == null){
+                return(
+                    <div key={key} className='col-6' style = {{textAlign: 'left', marginLeft: 0, marginTop: 40}}>
+                        <div style = {{fontSize: 16, fontWeight: 'bold', marginBottom: 15}}> TRANSACTION {num} </div>
+                        <div style = {{marginTop: 0}}> Total Album: {item.total_album} </div>
+                        <div style = {{marginTop: 10}}> Total Harga: {item.total_harga} </div>
+                        <div style = {{marginTop: 10, fontWeight: 'bold'}}> {status} </div>
+                        <input style = {{marginTop: 20}} type='file' ref={input => {this.bukti = input}}/>
+                        <div>
+                        <Button  variant="contained" onClick={this.onUpload} style={{backgroundColor: '#004d40', width: 120, color: 'white', marginTop: 20}}>
+                                Upload
+                        </Button>
+                        </div>
+                    </div>
+                )
+            }else{
+
+                const bukti = `http://localhost:2019/trans/bukti/${item.picture}`
+
+                return(
+                    <div key={key} className='col-6' style = {{textAlign: 'left', marginLeft: 0, marginTop: 40}}>
+                        <div style = {{fontSize: 16, fontWeight: 'bold', marginBottom: 15}}> TRANSACTION {num} </div>
+                        <div style = {{marginTop: 0}}> Total Album: {item.total_album} </div>
+                        <div style = {{marginTop: 10}}> Total Harga: {item.total_harga} </div>
+                        <div style = {{marginTop: 10, fontWeight: 'bold'}}> {status} </div>
+
+                        <div style = {{marginTop: 10}}>
+                            <img src={bukti} style={{width: 150, height: 150, objectFit: 'cover'}}/>
+                        </div>
+
+                        <input style = {{marginTop: 20}} type='file' ref={input => {this.bukti = input}}/>
+                        
+                        <div>
+                        <Button  variant="contained" onClick={this.onUpload} style={{backgroundColor: '#004d40', width: 120, color: 'white', marginTop: 20}}>
+                                Upload
+                        </Button>
+
+                        </div>
+                    </div>
+                )
+            }
+        })
+    }
+
+    onUpload = () => {
+        const formData = new FormData()
+
+        const bukti = this.bukti.files[0]
+        const picture = this.bukti.files[0].name
+        const td_id = this.props.album.tdid
+
+        formData.append('bukti', bukti)
+        formData.append('picture', picture)
+        formData.append('td_id', td_id)
+
+        axios.post(`http://localhost:2019/trans/bukti`,formData).then(res=>{
+            console.log(res)
         })
     }
 
@@ -93,7 +145,7 @@ class TransDetail extends Component {
                     <div className = 'col-6'>
                         {this.renderLeft()}
                     </div>
-                    {this.renderRight()}
+                        {this.renderRight()}
                 </div>
             )
         }
