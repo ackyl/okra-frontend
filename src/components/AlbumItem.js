@@ -79,7 +79,7 @@ class AlbumItem extends Component {
                     >
 
                         <img src={picture} style={{width: 200, height: 200, opacity: 0.5}}/>
-                        <div style={{position: 'absolute', top:'50%', left: '50%', transform: 'translate(-50%, -50%)', color: 'black', fontWeight: 'bolder', fontSize: 12}}>OUT OF STOCK</div>
+                        <div style={{position: 'absolute', top:'50%', left: '50%', transform: 'translate(-50%, -50%)', color: 'white', fontWeight: 'bolder', fontSize: 12}}>OUT OF STOCK</div>
                     </CardActionArea>
                     </Link>
                     </Card>

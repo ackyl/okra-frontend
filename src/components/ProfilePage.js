@@ -70,25 +70,31 @@ class ProfilePage extends Component {
             return (
                 <div style={{width:'100%', textAlign: 'center', marginTop: 40}}>
 
-                    <img src={pp} style={{width: 200, height: 200}}/>
+                    <div className='mx-auto card' style={{width: 300, textAlign: 'center'}}>
+
+                    <img src={pp} style={{width: 300, height: 300, objectFit: 'cover'}}/>
 
                     <div>
                         <div style={{fontWeight: 'bold', marginTop: 10}}>{this.props.user.username}</div>
                         <div style={{marginTop: 10}}>{this.props.user.name}</div>
                         <div style={{marginTop: 10}}>{this.props.user.email}</div>
                     
-                        <Button  variant="contained" onClick={this.onEdit} style={{backgroundColor: '#004d40', width: 200, color: 'white', marginTop: 25}}>
+                        <Button  variant="contained" onClick={this.onEdit} style={{backgroundColor: '#004d40', width: 200, color: 'white', marginTop: 25, marginBottom: 25}}>
                             Edit Profile
                         </Button>
+                    </div>
+
                     </div>
 
                 </div>
             )
         }else{
             return(
-                <div style={{width:'100%', textAlign: 'center', marginTop: 40}}>
+                <div style={{width:'100%', textAlign: 'center', marginTop: 40, marginBottom: 40}}>
 
-                    <img src={pp} style={{width: 200, height: 200}}/>
+                <div className='mx-auto card' style={{width: 300, textAlign: 'center'}}>
+
+                    <img src={pp} style={{width: 300, height: 300, objectFit: 'cover'}}/>
 
                     <div>
 
@@ -120,11 +126,13 @@ class ProfilePage extends Component {
                     
                         
                         <div>
-                        <Button  variant="contained" onClick={this.onCancel} style={{backgroundColor: '#004d40', width: 200, color: 'white', marginTop: 25}}>
+                        <Button  variant="contained" onClick={this.onCancel} style={{backgroundColor: '#004d40', width: 200, color: 'white', marginTop: 25, marginBottom: 25}}>
                             Cancel
                         </Button>
                         </div>
                     </div>
+
+                </div>
 
                 </div>
             )

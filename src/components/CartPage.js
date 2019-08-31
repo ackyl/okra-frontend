@@ -97,7 +97,7 @@ class CartPage extends Component {
         }else{
             return (
                 <div style = {{width: '100%', textAlign: 'center', marginTop: 40}}>
-                    <h4>Your Cart is Still Empty.</h4>
+                    <div style={{fontSize: 20, fontWeight: 'bold'}}>Your Cart is Still Empty.</div>
                 </div>
             )
         }
