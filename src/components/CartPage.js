@@ -8,15 +8,24 @@ import Button from '@material-ui/core/Button'
 class CartPage extends Component {
 
     state = {
-        carts: []
+        carts: [],
+        delete: 0
     }
 
     componentDidMount(){
         this.getCart()
     }
 
-    onDelete = () => {
-        
+    onDelete = (id, stock, qty, album_id) => {
+        const newstock = stock + qty
+
+        axios.delete(`http://localhost:2019/cart/${id}`)
+            .then(res => {
+                axios.patch(`http://localhost:2019/stock/${album_id}`, {stock: newstock})
+                    .then(res => {
+                        this.getCart()
+                })
+        })
     }
 
     getCart = () => {
@@ -28,9 +37,31 @@ class CartPage extends Component {
 
     renderList = () => {
         return this.state.carts.map( (item, key) => {
+
+            var formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'IDR',
+              });
+            
+            item.price = formatter.format(item.price)
+
             return (
-                <div className = 'col-6'>
-                    <CartItem cart={item} key={key}/>
+                <div className = 'col-6' key={key}>
+                    <div className = 'row' style = {{width: '100%', marginTop: 40}}>
+                    <div className = 'col-6' style = {{textAlign: 'right', paddingRight: 50, marginLeft: 0, paddingLeft: 0}}>
+                        <img src={item.picture} style={{width: 200, height: 200}}/>
+                    </div>
+
+                    <div className = 'col-6' style = {{textAlign: 'left', marginRight: 0, padding: 0}}>
+                        <div style = {{fontSize: 18, fontWeight: 'bold'}}> {item.album_artist} - {item.album_name} </div>
+                        <div style = {{fontSize: 16, marginTop: 5}}> {item.price} </div>
+                        <div style = {{fontSize: 16, marginTop: 5}}> Quantity: {item.qty} </div>
+                        <Button variant="contained" onClick={() => this.onDelete(item.id, item.stock, item.qty, item.album_id)}
+                        style={{backgroundColor: '#004d40', color: 'white', marginTop: 15, fontSize: 12}}>
+                                Remove From Cart
+                        </Button>
+                    </div>
+                </div>
                 </div>
             )
         })

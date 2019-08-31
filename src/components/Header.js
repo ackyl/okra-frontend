@@ -94,7 +94,7 @@ class Header extends Component {
               </Typography>
 
               <Link to='/cart' style={{color: '#000000'}}><Button color="inherit">Cart</Button></Link>
-              <Link to='/' style={{color: '#000000'}}><Button color="inherit">Transaction History</Button></Link>
+              <Link to='/' style={{color: '#000000'}}><Button color="inherit">Transactions</Button></Link>
               <Link to='/profile' style={{color: '#000000'}}><Button color="inherit">Profile</Button></Link>
               <Button color="inherit" onClick={this.onClickLogout} style={{color: '#000000'}}>Logout</Button>
   

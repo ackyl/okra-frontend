@@ -2,7 +2,8 @@ const init = {
     user_id: '',
     username: '',
     user_type: '',
-    error: ''
+    error: '',
+    tempo: ''
 }
 
 export default (data = init, action) => {
@@ -30,6 +31,9 @@ export default (data = init, action) => {
 
         case 'LOGOUT':
             return{...data, ...init}
+
+        case 'TEMPO':
+            return{...data, tempo: action.payload.tempo}
                 
         default:
             return data

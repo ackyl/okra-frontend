@@ -155,3 +155,10 @@ export const selectedAlbum = (id, stock) => {
         payload: {id, stock}
     }
 }
+
+export const tempo = (tempo) => {
+    return {
+        type: 'TEMPO',
+        payload: {tempo}
+    }
+}

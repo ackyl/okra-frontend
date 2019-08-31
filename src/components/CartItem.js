@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { selectedAlbum } from '../actions/index'
 import Button from '@material-ui/core/Button'
+import axios from 'axios'
+import {tempo} from '../actions/index'
 
 var styles = {
     card: {
@@ -24,7 +25,19 @@ var styles = {
 class CartItem extends Component {
 
     onDelete = () => {
+        const id = this.props.cart.id
+        const stock = this.props.cart.stock
+        const qty = this.props.cart.qty
+        const album_id = this.props.cart.album_id
+        const newstock = stock + qty
 
+        axios.delete(`http://localhost:2019/cart/${id}`)
+            .then(res => {
+                axios.patch(`http://localhost:2019/stock/${album_id}`, {stock: newstock})
+                    .then(res => {
+                        this.props.tempo('test')
+                })
+        })
     }
 
     render(){
@@ -63,4 +76,4 @@ const mapState = (state) => {
     }
 }
 
-export default connect(mapState,{selectedAlbum})(CartItem)
+export default connect(mapState,{tempo})(CartItem)
