@@ -8,7 +8,8 @@ class TransDetail extends Component {
 
     state = {
         trans: [],
-        tranz: []
+        tranz: [],
+        verify: null
     }
 
     componentDidMount(){
@@ -22,7 +23,7 @@ class TransDetail extends Component {
                this.setState({trans: res.data})
                axios.get(`http://localhost:2019/trans/detailz/${this.props.album.tdid}`)
                     .then(res => {
-                    this.setState({tranz: res.data})
+                        this.setState({tranz: res.data})
                     })
             })
     }
@@ -55,7 +56,16 @@ class TransDetail extends Component {
     }
 
     onVerify = (status) => {
-        console.log(status)
+        const trans_type = status
+        const id = this.state.tranz[0].td_id
+
+        console.log(id)
+
+        axios.patch(`http://localhost:2019/verify/${id}`,{trans_type})
+            .then(res=> {
+                console.log(res)
+                this.setState({verify: true})
+            })
     }
 
     renderRight = () => {
@@ -75,14 +85,20 @@ class TransDetail extends Component {
                 if(item.total_harga / 2)
                 item.total_harga = formatter.format(item.total_harga)
 
-                if(item.trans_type == 'in progress' && item.picture == null)
+                if(item.trans_type == 'in progress'){
                     status = 'Please Upload Your Proof of Payment'
-                else if(item.trans_type == 'in progress' && item.picture != null)
+                }else if(item.trans_type == 'waiting'){
                     status = "Proof of Payment Isn't Yet Verified"
+                }else if(item.trans_type == 'decline'){
+                    status = 'Proof of Payment Is Declined (Please Reupload)'
+                }else{
+                    status = 'Payment Success'
+                }
 
                 if(item.picture == null){
                     return(
                         <div key={key} className='col-6' style = {{textAlign: 'left', marginLeft: 0, marginTop: 40}}>
+                            <div style = {{marginLeft: 60}}>
                             <div style = {{fontSize: 16, fontWeight: 'bold', marginBottom: 15}}> TRANSACTION {num} </div>
                             <div style = {{marginTop: 0}}> Total Album: {item.total_album} </div>
                             <div style = {{marginTop: 10}}> Total Harga: {item.total_harga} </div>
@@ -93,14 +109,16 @@ class TransDetail extends Component {
                                     Upload
                             </Button>
                             </div>
+                            </div>
                         </div>
                     )
-                }else{
+                }else if(item.trans_type !== 'accept'){
 
                     const bukti = `http://localhost:2019/trans/bukti/${item.picture}`
 
                     return(
                         <div key={key} className='col-6' style = {{textAlign: 'left', marginLeft: 0, marginTop: 40}}>
+                            <div style = {{marginLeft: 60}}>
                             <div style = {{fontSize: 16, fontWeight: 'bold', marginBottom: 15}}> TRANSACTION {num} </div>
                             <div style = {{marginTop: 0}}> Total Album: {item.total_album} </div>
                             <div style = {{marginTop: 10}}> Total Harga: {item.total_harga} </div>
@@ -117,6 +135,24 @@ class TransDetail extends Component {
                                     Upload
                             </Button>
 
+                            </div>
+                            </div>
+                        </div>
+                    )
+                }else{
+                    const bukti = `http://localhost:2019/trans/bukti/${item.picture}`
+
+                    return(
+                        <div key={key} className='col-6' style = {{textAlign: 'left', marginLeft: 0, marginTop: 40}}>
+                            <div style = {{marginLeft: 60}}>
+                            <div style = {{fontSize: 16, fontWeight: 'bold', marginBottom: 15}}> TRANSACTION {num} </div>
+                            <div style = {{marginTop: 0}}> Total Album: {item.total_album} </div>
+                            <div style = {{marginTop: 10}}> Total Harga: {item.total_harga} </div>
+                            <div style = {{marginTop: 10, fontWeight: 'bold'}}> {status} </div>
+
+                            <div style = {{marginTop: 10}}>
+                                <img src={bukti} style={{width: 150, height: 150, objectFit: 'cover'}}/>
+                            </div>
                             </div>
                         </div>
                     )
@@ -135,31 +171,58 @@ class TransDetail extends Component {
 
                 const bukti = `http://localhost:2019/trans/bukti/${item.picture}`
 
-                return(
-                    <div key={key} className='col-6' style = {{textAlign: 'left', marginLeft: 0, marginTop: 40}}>
-                        <div style = {{marginLeft: 60}}>
-                        <div style = {{fontSize: 16, fontWeight: 'bold', marginBottom: 15}}> TRANSACTION {item.td_id} </div>
-                        <div style = {{marginTop: 0}}> Total Album: {item.total_album} </div>
-                        <div style = {{marginTop: 10}}> Total Harga: {item.total_harga} </div>
+                if(item.trans_type == 'waiting'){
+                    return(
+                        <div key={key} className='col-6' style = {{textAlign: 'left', marginLeft: 0, marginTop: 40}}>
+                            <div style = {{marginLeft: 60}}>
+                            <div style = {{fontSize: 16, fontWeight: 'bold', marginBottom: 15}}> TRANSACTION {item.td_id} </div>
+                            <div style = {{marginTop: 0}}> Total Album: {item.total_album} </div>
+                            <div style = {{marginTop: 10}}> Total Harga: {item.total_harga} </div>
 
-                        <div style = {{marginTop: 10}}>
-                            <img src={bukti} style={{width: 150, height: 150, objectFit: 'cover'}}/>
-                        </div>
+                            <div style = {{marginTop: 10}}>
+                                <img src={bukti} style={{width: 150, height: 150, objectFit: 'cover'}}/>
+                            </div>
 
-                        <div>
-                        <Button variant="contained" onClick={()=> {this.onVerify('accept')}} style={{backgroundColor: '#004d40', width: 120, color: 'white', marginTop: 20}}>
-                            Accept
-                        </Button>
-                        </div>
+                            <div>
+                            <Button variant="contained" onClick={()=> {this.onVerify('accept')}} style={{backgroundColor: '#004d40', width: 120, color: 'white', marginTop: 20}}>
+                                Accept
+                            </Button>
+                            </div>
 
-                        <div>
-                        <Button  variant="contained" onClick={()=> {this.onVerify('decline')}} style={{backgroundColor: '#004d40', width: 120, color: 'white', marginTop: 20}}>
-                            Decline
-                        </Button>
+                            <div>
+                            <Button  variant="contained" onClick={()=> {this.onVerify('decline')}} style={{backgroundColor: '#004d40', width: 120, color: 'white', marginTop: 20}}>
+                                Decline
+                            </Button>
+                            </div>
+                            </div>
                         </div>
+                    )
+                }else if(item.trans_type == 'in progress'){
+                    return(
+                        <div key={key} className='col-6' style = {{textAlign: 'left', marginLeft: 0, marginTop: 40}}>
+                            <div style = {{marginLeft: 60}}>
+                                <div style = {{fontSize: 16, fontWeight: 'bold', marginBottom: 15}}> TRANSACTION {item.td_id} </div>
+                                <div style = {{marginTop: 0}}> Total Album: {item.total_album} </div>
+                                <div style = {{marginTop: 10}}> Total Harga: {item.total_harga} </div>
+                            </div>
                         </div>
-                    </div>
-                )
+                    )
+                }else{
+                    return(
+                        <div key={key} className='col-6' style = {{textAlign: 'left', marginLeft: 0, marginTop: 40}}>
+                            <div style = {{marginLeft: 60}}>
+                            <div style = {{fontSize: 16, fontWeight: 'bold', marginBottom: 15}}> TRANSACTION {item.td_id} </div>
+                            <div style = {{marginTop: 0}}> Total Album: {item.total_album} </div>
+                            <div style = {{marginTop: 10}}> Total Harga: {item.total_harga} </div>
+
+                            <div style = {{marginTop: 10}}>
+                                <img src={bukti} style={{width: 150, height: 150, objectFit: 'cover'}}/>
+                            </div>
+
+                            </div>
+                        </div>
+                    )
+                }
             })
         }
     }
@@ -176,11 +239,16 @@ class TransDetail extends Component {
         formData.append('td_id', td_id)
 
         axios.post(`http://localhost:2019/trans/bukti`,formData).then(res=>{
-            console.log(res)
+            this.getTrans()
         })
     }
 
     render() {
+
+        const ver = this.state.verify ? (
+            <Redirect to='/trans'></Redirect>
+        ) : (<div></div>)
+
         if(this.props.album.tdid == ''){
             return(
                 <Redirect to='/trans'></Redirect>
@@ -192,6 +260,7 @@ class TransDetail extends Component {
                         {this.renderLeft()}
                     </div>
                         {this.renderRight()}
+                        {ver}
                 </div>
             )
         }

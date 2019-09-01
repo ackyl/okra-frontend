@@ -44,12 +44,18 @@ class TransPage extends Component {
             let status = ''
             let color = ''
 
-            if(item.trans_type == 'in progress' && item.picture == null){
+            if(item.trans_type == 'in progress'){
                 status = 'Please Upload Your Proof of Payment'
                 color = 'red'
-            }else if(item.trans_type == 'in progress' && item.picture != null){
+            }else if(item.trans_type == 'waiting'){
                 status = "Proof of Payment Isn't Yet Verified"
                 color = 'yellow'
+            }else if(item.trans_type == 'decline'){
+                status = 'Proof of Payment Is Declined (Please Reupload)'
+                color = 'red'
+            }else{
+                status = 'Payment Success'
+                color = 'green'
             }
 
             var formatter = new Intl.NumberFormat('en-US', {

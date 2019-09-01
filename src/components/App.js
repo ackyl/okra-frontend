@@ -13,6 +13,7 @@ import CartPage from './CartPage'
 import TransPage from './TransPage'
 import TransDetail from './TransDetail'
 import AddAlbum from './AddAlbum'
+import AllTrans from './AllTrans'
 
 const cookie = new cookies()
 
@@ -40,6 +41,7 @@ class App extends Component {
                 <Route path='/trans' component={TransPage}/>
                 <Route path='/detail' component={TransDetail}/>
                 <Route path='/add' component={AddAlbum}/>
+                <Route path='/alltrans' component={AllTrans}/>
             </BrowserRouter>
         )
     }
