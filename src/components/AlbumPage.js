@@ -205,7 +205,7 @@ class AlbumPage extends Component {
                         />
                         </div>
 
-                        <Button  variant="contained" onClick={this.onAddToCart} style={{backgroundColor: '#004d40', color: 'white', marginTop: 20}}>
+                        <Button  variant="contained" onClick={this.onAddToCart} style={{backgroundColor: '#004d40', color: 'white', marginTop: 20, marginBottom: 40}}>
                             Add to Cart
                         </Button>
                     </div>

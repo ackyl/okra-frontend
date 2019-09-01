@@ -54,68 +54,114 @@ class TransDetail extends Component {
         })
     }
 
+    onVerify = (status) => {
+        console.log(status)
+    }
+
     renderRight = () => {
-        return this.state.tranz.map( (item,key) => {
 
-            const num = key + 1
-            let status = ''
-            let color = ''
+        if(this.props.user.user_type == 'user'){
+            return this.state.tranz.map( (item,key) => {
 
-            var formatter = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'IDR',
-              });
-            
-            if(item.total_harga / 2)
-            item.total_harga = formatter.format(item.total_harga)
+                const num = key + 1
+                let status = ''
+                let color = ''
 
-            if(item.trans_type == 'in progress' && item.picture == null)
-                status = 'Please Upload Your Proof of Payment'
-            else if(item.trans_type == 'in progress' && item.picture != null)
-                status = "Proof of Payment Isn't Yet Verified"
+                var formatter = new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'IDR',
+                });
+                
+                if(item.total_harga / 2)
+                item.total_harga = formatter.format(item.total_harga)
 
-            if(item.picture == null){
-                return(
-                    <div key={key} className='col-6' style = {{textAlign: 'left', marginLeft: 0, marginTop: 40}}>
-                        <div style = {{fontSize: 16, fontWeight: 'bold', marginBottom: 15}}> TRANSACTION {num} </div>
-                        <div style = {{marginTop: 0}}> Total Album: {item.total_album} </div>
-                        <div style = {{marginTop: 10}}> Total Harga: {item.total_harga} </div>
-                        <div style = {{marginTop: 10, fontWeight: 'bold'}}> {status} </div>
-                        <input style = {{marginTop: 20}} type='file' ref={input => {this.bukti = input}}/>
-                        <div>
-                        <Button  variant="contained" onClick={this.onUpload} style={{backgroundColor: '#004d40', width: 120, color: 'white', marginTop: 20}}>
-                                Upload
-                        </Button>
+                if(item.trans_type == 'in progress' && item.picture == null)
+                    status = 'Please Upload Your Proof of Payment'
+                else if(item.trans_type == 'in progress' && item.picture != null)
+                    status = "Proof of Payment Isn't Yet Verified"
+
+                if(item.picture == null){
+                    return(
+                        <div key={key} className='col-6' style = {{textAlign: 'left', marginLeft: 0, marginTop: 40}}>
+                            <div style = {{fontSize: 16, fontWeight: 'bold', marginBottom: 15}}> TRANSACTION {num} </div>
+                            <div style = {{marginTop: 0}}> Total Album: {item.total_album} </div>
+                            <div style = {{marginTop: 10}}> Total Harga: {item.total_harga} </div>
+                            <div style = {{marginTop: 10, fontWeight: 'bold'}}> {status} </div>
+                            <input style = {{marginTop: 20}} type='file' ref={input => {this.bukti = input}}/>
+                            <div>
+                            <Button  variant="contained" onClick={this.onUpload} style={{backgroundColor: '#004d40', width: 120, color: 'white', marginTop: 20}}>
+                                    Upload
+                            </Button>
+                            </div>
                         </div>
-                    </div>
-                )
-            }else{
+                    )
+                }else{
+
+                    const bukti = `http://localhost:2019/trans/bukti/${item.picture}`
+
+                    return(
+                        <div key={key} className='col-6' style = {{textAlign: 'left', marginLeft: 0, marginTop: 40}}>
+                            <div style = {{fontSize: 16, fontWeight: 'bold', marginBottom: 15}}> TRANSACTION {num} </div>
+                            <div style = {{marginTop: 0}}> Total Album: {item.total_album} </div>
+                            <div style = {{marginTop: 10}}> Total Harga: {item.total_harga} </div>
+                            <div style = {{marginTop: 10, fontWeight: 'bold'}}> {status} </div>
+
+                            <div style = {{marginTop: 10}}>
+                                <img src={bukti} style={{width: 150, height: 150, objectFit: 'cover'}}/>
+                            </div>
+
+                            <input style = {{marginTop: 20}} type='file' ref={input => {this.bukti = input}}/>
+                            
+                            <div>
+                            <Button  variant="contained" onClick={this.onUpload} style={{backgroundColor: '#004d40', width: 120, color: 'white', marginTop: 20}}>
+                                    Upload
+                            </Button>
+
+                            </div>
+                        </div>
+                    )
+                }
+            })
+        }else{
+            return this.state.tranz.map( (item,key) => {
+
+                var formatter = new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'IDR',
+                });
+                
+                if(item.total_harga / 2)
+                item.total_harga = formatter.format(item.total_harga)
 
                 const bukti = `http://localhost:2019/trans/bukti/${item.picture}`
 
                 return(
                     <div key={key} className='col-6' style = {{textAlign: 'left', marginLeft: 0, marginTop: 40}}>
-                        <div style = {{fontSize: 16, fontWeight: 'bold', marginBottom: 15}}> TRANSACTION {num} </div>
+                        <div style = {{marginLeft: 60}}>
+                        <div style = {{fontSize: 16, fontWeight: 'bold', marginBottom: 15}}> TRANSACTION {item.td_id} </div>
                         <div style = {{marginTop: 0}}> Total Album: {item.total_album} </div>
                         <div style = {{marginTop: 10}}> Total Harga: {item.total_harga} </div>
-                        <div style = {{marginTop: 10, fontWeight: 'bold'}}> {status} </div>
 
                         <div style = {{marginTop: 10}}>
                             <img src={bukti} style={{width: 150, height: 150, objectFit: 'cover'}}/>
                         </div>
 
-                        <input style = {{marginTop: 20}} type='file' ref={input => {this.bukti = input}}/>
-                        
                         <div>
-                        <Button  variant="contained" onClick={this.onUpload} style={{backgroundColor: '#004d40', width: 120, color: 'white', marginTop: 20}}>
-                                Upload
+                        <Button variant="contained" onClick={()=> {this.onVerify('accept')}} style={{backgroundColor: '#004d40', width: 120, color: 'white', marginTop: 20}}>
+                            Accept
                         </Button>
+                        </div>
 
+                        <div>
+                        <Button  variant="contained" onClick={()=> {this.onVerify('decline')}} style={{backgroundColor: '#004d40', width: 120, color: 'white', marginTop: 20}}>
+                            Decline
+                        </Button>
+                        </div>
                         </div>
                     </div>
                 )
-            }
-        })
+            })
+        }
     }
 
     onUpload = () => {
