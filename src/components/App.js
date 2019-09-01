@@ -12,6 +12,7 @@ import ProfilePage from './ProfilePage'
 import CartPage from './CartPage'
 import TransPage from './TransPage'
 import TransDetail from './TransDetail'
+import AddAlbum from './AddAlbum'
 
 const cookie = new cookies()
 
@@ -38,6 +39,7 @@ class App extends Component {
                 <Route path='/cart' component={CartPage}/>
                 <Route path='/trans' component={TransPage}/>
                 <Route path='/detail' component={TransDetail}/>
+                <Route path='/add' component={AddAlbum}/>
             </BrowserRouter>
         )
     }

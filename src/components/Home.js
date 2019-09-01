@@ -123,7 +123,7 @@ class Home extends Component {
 
                 </div>
 
-                <div className="row col-10">
+                <div className="row col" style={{marginBottom: 40}}>
                     {this.renderList()}
                 </div>
 

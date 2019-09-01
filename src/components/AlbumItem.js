@@ -9,18 +9,18 @@ import {Link} from 'react-router-dom'
 
 var styles = {
     card: {
-        width: 200,
-        height: 200,
+        width: 190,
+        height: 190,
         marginLeft: 20,
         marginTop: 25
     },
     media: {
-        height: 200,
-        width: 200
+        height: 190,
+        width: 190
     },
     center: {
         textAlign: 'center',
-        width: 200,
+        width: 190,
         marginLeft: 20
     }
 }
@@ -78,7 +78,7 @@ class AlbumItem extends Component {
                         style={{position: 'relative', textAlign: 'center'}}
                     >
 
-                        <img src={picture} style={{width: 200, height: 200, opacity: 0.5}}/>
+                        <img src={picture} style={{width: 190, height: 190, opacity: 0.5}}/>
                         <div style={{position: 'absolute', top:'50%', left: '50%', transform: 'translate(-50%, -50%)', color: 'white', fontWeight: 'bolder', fontSize: 12}}>OUT OF STOCK</div>
                     </CardActionArea>
                     </Link>
