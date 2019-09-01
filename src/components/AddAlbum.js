@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
-import {Redirect} from 'react-router-dom'
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField'
 
 class AddAlbum extends Component {
+
+    state = {
+        uploaded: null
+    }
 
     onAdd = () => {
         const formData = new FormData()
@@ -30,6 +33,7 @@ class AddAlbum extends Component {
     }
 
     render(){
+
         return(
             <div style={{width:'100%', textAlign: 'center', marginTop: 40, marginBottom: 40}}>
                 <div className='mx-auto card' style={{width: 300, textAlign: 'center'}}>
@@ -57,6 +61,7 @@ class AddAlbum extends Component {
                         <Button  variant="contained" onClick={this.onAdd} style={{backgroundColor: '#004d40', width: 200, color: 'white', marginTop: 25, marginBottom: 40}}>
                             Add Album
                         </Button>
+
                         </div>
                     </div>
                 </div>

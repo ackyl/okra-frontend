@@ -12,7 +12,9 @@ class AlbumPage extends Component {
     state = {
         tracks: [],
         album: [],
-        album1: null
+        album1: null,
+        edit: false,
+        redirect: null
     }
 
     componentDidMount(){
@@ -68,15 +70,58 @@ class AlbumPage extends Component {
         })
     }
 
+    onEdit = () => {
+        this.setState({edit: true})
+    }
+
+    onCancel = () => {
+        this.setState({edit: false})
+    }
+
+    onDelete = () => {
+        axios.delete(`http://localhost:2019/album/${this.props.album.id}`)
+            .then(res => {
+                this.setState({redirect: true})
+            })
+    }
+
+    onSave = () => {
+        const album_artist = this.artist.value
+        const album_name = this.album.value
+        const release_year = this.year.value
+        const genre = this.genre.value
+        const price = this.price.value
+        const stock = this.stock.value
+
+        axios.patch(`http://localhost:2019/album/${this.props.album.id}`, {album_artist, album_name, release_year, genre, price, stock})
+            .then(res => {
+                this.getAlbumDetails()
+                this.setState({edit:false})
+            })
+    }
+
 
     render() {
         const {album1} = this.state
+        const {redirect} = this.state
 
         var min = 1;
         var max = 7;
         var rand =  parseInt(min + (Math.random() * (max-min)))
+        var idr = 0
 
-        console.log(rand)
+        if(album1 !== null){
+            var formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'IDR',
+              });
+            
+            idr = formatter.format(album1[0].price)
+        }
+
+        const red = redirect ? (
+            <Redirect to='/'></Redirect>
+        ) : (<div></div>)
 
         const wait = album1 ? (
 
@@ -84,7 +129,8 @@ class AlbumPage extends Component {
                 <img src={album1[0].picture}/>
                 <h5 style={{marginTop: 10}}>{album1[0].album_artist}</h5>
                 <h5 style={{marginTop: 10}}>{album1[0].album_name}</h5>
-                <div style={{marginTop: 10}}>{album1[0].release_year}, {album1[0].genre}</div>
+                <div style={{marginTop: 10}}>{album1[0].release_year} | {album1[0].genre}</div>
+                <div style={{marginTop: 10}}>Price : {idr}</div>
                 <div style={{marginTop: 10}}>Stock : {album1[0].stock}</div>
             </div>
 
@@ -179,16 +225,107 @@ class AlbumPage extends Component {
 
                 </div>
             )
-        }else{
+        }else if(this.props.user.user_type == 'admin' && this.state.edit == false){
             return (
                 <div className='row' style = {{width: '100%', padding: 0, margin: 0}}>
 
                     <div className='col-4' style={{marginTop: 25, textAlign: 'center'}}>
                         {wait}
 
-                        <Button variant="contained" style={{backgroundColor: '#004d40', color: 'white', marginTop: 20}}>
+                        <div>
+                        <Button variant="contained" onClick={this.onEdit} style={{backgroundColor: '#004d40', color: 'white', marginTop: 20, width: 150}}>
                             Edit Album
                         </Button>
+                        </div>
+
+                        <div>
+                        <Button variant="contained" onClick={this.onDelete} style={{backgroundColor: '#004d40', color: 'white', marginTop: 20, width: 150, marginBottom: 40}}>
+                            Delete Album
+                        </Button>
+
+                        {red}
+                        
+                        </div>
+                    </div>
+
+                    <div className='col-8' style={{minHeight: 600,
+                            marginRight: 0,
+                            backgroundImage: `url("../img/${rand}.jpg")`,
+                            backgroundSize: '100%',
+                            backgroundPosition: 'center'
+                            }}>
+
+                        <div style={{marginTop: 25, color: 'white'}}>
+                            {this.renderTracks()}
+                        </div>
+
+                    </div>
+
+                </div>
+            )
+        }else{
+            return (
+                <div className='row' style = {{width: '100%', padding: 0, margin: 0}}>
+
+                    <div className='col-4' style={{marginTop: 25, textAlign: 'center'}}>
+
+                    <div>
+                        <img src={album1[0].picture}/>
+                        <div>
+                        <TextField
+                            label="Album Artist" margin="dense" variant="outlined"
+                            inputRef={input => this.artist = input}
+                            defaultValue={album1[0].album_artist}
+                        />
+                        </div>
+                        <div>
+                        <TextField
+                            label="Album Name" margin="dense" variant="outlined"
+                            inputRef={input => this.album = input}
+                            defaultValue={album1[0].album_name}
+                        />
+                        </div>
+                        <div>
+                        <TextField
+                            label="Release Year" margin="dense" variant="outlined"
+                            inputRef={input => this.year = input}
+                            defaultValue={album1[0].release_year}
+                        />
+                        </div>
+                        <div>
+                        <TextField
+                            label="Genre" margin="dense" variant="outlined"
+                            inputRef={input => this.genre = input}
+                            defaultValue={album1[0].genre}
+                        />
+                        </div>
+                        <div>
+                        <TextField
+                            label="Price" margin="dense" variant="outlined"
+                            inputRef={input => this.price = input}
+                            defaultValue={album1[0].price}
+                        />
+                        </div>
+                        <div>
+                        <TextField
+                            label="Stock" margin="dense" variant="outlined"
+                            inputRef={input => this.stock = input}
+                            defaultValue={album1[0].stock}
+                        />
+                        </div>
+                    </div>
+
+                        <div>
+                        <Button variant="contained" onClick={this.onSave} style={{backgroundColor: '#004d40', color: 'white', marginTop: 20, width: 150}}>
+                            Save
+                        </Button>
+                        </div>
+
+                        <div>
+                        <Button variant="contained" onClick={this.onCancel} style={{backgroundColor: '#004d40', color: 'white', marginTop: 20, width: 150, marginBottom: 40}}>
+                            Cancel
+                        </Button>
+                        </div>
                     </div>
 
                     <div className='col-8' style={{minHeight: 600,
