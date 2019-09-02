@@ -54,6 +54,8 @@ class ProfilePage extends Component {
 
             this.setState({edit: false})
 
+            document.location.reload(true)
+
         })
     }
 

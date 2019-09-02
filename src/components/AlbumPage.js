@@ -14,7 +14,8 @@ class AlbumPage extends Component {
         album: [],
         album1: null,
         edit: false,
-        redirect: null
+        redirect: null,
+        error: null
     }
 
     componentDidMount(){
@@ -58,16 +59,20 @@ class AlbumPage extends Component {
         const user_id = this.props.user.user_id
         const album_id = this.props.album.id
 
-        axios.post(`http://localhost:2019/cart`, {qty, user_id, album_id})
-            .then(res => {
-                const stock = this.props.album.stock - qty
-                
-                axios.patch(`http://localhost:2019/stock/${this.props.album.id}`, {stock})
-                    .then(res => {
-                        this.state.album1[0].stock = stock
-                        this.setState({album1: this.state.album1})
-                })
-        })
+        if(qty > this.props.album.stock){
+            this.setState({error: true})
+        }else{
+            axios.post(`http://localhost:2019/cart`, {qty, user_id, album_id})
+                .then(res => {
+                    const stock = this.props.album.stock - qty
+                    
+                    axios.patch(`http://localhost:2019/stock/${this.props.album.id}`, {stock})
+                        .then(res => {
+                            this.state.album1[0].stock = stock
+                            this.setState({album1: this.state.album1})
+                    })
+            })
+        }
     }
 
     onEdit = () => {
@@ -121,6 +126,10 @@ class AlbumPage extends Component {
 
         const red = redirect ? (
             <Redirect to='/'></Redirect>
+        ) : (<div></div>)
+
+        const error = this.state.error ? (
+            <div style={{color: 'red', fontWeight: 'bold', marginTop: 15}}>Input melebihi stock.</div>
         ) : (<div></div>)
 
         const wait = album1 ? (
@@ -204,6 +213,8 @@ class AlbumPage extends Component {
                             defaultValue='1'
                         />
                         </div>
+
+                        <div>{error}</div>
 
                         <Button  variant="contained" onClick={this.onAddToCart} style={{backgroundColor: '#004d40', color: 'white', marginTop: 20, marginBottom: 40}}>
                             Add to Cart
