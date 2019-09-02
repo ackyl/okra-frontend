@@ -34,6 +34,8 @@ export const onRegisterUser = (username,name,email,password) => {
 
                             cookie.set('login', {user_id, username, name, email, user_type, profile_picture}, {path:"/"})
 
+                            
+
                             dispatch({
                                 type: 'REGISTER_SUCCESS',
                                 payload: {user_id, username, name, email, user_type, profile_picture}
@@ -91,14 +93,9 @@ export const onLogin = (username,password) => {
                     })
                 } else {
                     dispatch({
-                        type: 'AUTH_ERROR',
-                        payload: "Username or Password incorrect"
+                        type: 'LOGIN_ERROR',
+                        payload: 'Username or Password is Incorrect'
                     })
-                    setTimeout(() => {
-                        dispatch({
-                            type: 'AUTH_NO_MESS'
-                        })
-                    }, 2000);
                 }
             })
     }

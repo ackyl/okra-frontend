@@ -2,9 +2,15 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {Link, Redirect} from 'react-router-dom'
 import {onRegisterUser} from '../actions/index'
+import TextField from '@material-ui/core/TextField'
+import isEmail from 'validator/lib/isEmail'
 
 
 class Register extends Component {
+
+    state = {
+        error: null
+    }
 
     onButtonClick = () => {
         const user = this.username.value
@@ -12,42 +18,64 @@ class Register extends Component {
         const name = this.name.value
         const email = this.email.value
 
-        this.props.onRegisterUser(user,name,email,pass)
+
+        if(user == '' || pass == '' || name == '' || email == '')
+            this.setState({error: 'Please fill all the field.'})
+        else if(pass.length < 6)
+            this.setState({error: 'Password must be more than 5 characters.'})
+        else if(!isEmail(email))
+            this.setState({error: 'Bad email format.'})
+        else
+            this.props.onRegisterUser(user,name,email,pass)
+    }
+
+    componentDidUpdate(){
+        console.log(this.props.user)
     }
 
     render() {
         if(this.props.user.user_id == ''){
-        return (
-            <div className="mt-5 row">
-                <div className="col-sm-3 mx-auto card">
-                    <div className="card-body">
-                        <div className="border-bottom border-secondary card-title">
-                            <h2>Register</h2>
-                        </div>
-                        <div className="card-title mt-1">
-                            <h4>Username</h4>
-                        </div>
-                        <form className="input-group"><input ref={input => this.username = input} className="form-control" type="text"/></form>
-                        <div className="card-title mt-1">
-                            <h4>Password</h4>
-                        </div>
-                        <form className="input-group"><input ref={input => this.password = input} className="form-control" type="password"/></form>
-                        <div className="card-title mt-1">
-                            <h4>Full Name</h4>
-                        </div>
-                        <form className="input-group"><input ref={input => this.name = input} className="form-control" type="text"/></form>
-                        <div className="card-title mt-1">
-                            <h4>Email</h4>
-                        </div>
-                        <form className="input-group"><input ref={input => this.email = input} className="form-control" type="text"/></form>
-                        <div className="d-flex justify-content-center my-3">
-                        </div>
+            return (
+                <div className="mt-5 row">
+                    <div className="col-sm-3 mx-auto card">
+                        <div className="card-body">
+                            <div className="card-title">
+                                <h4>Register</h4>
+                            </div>
 
-                        <button className="btn btn-success btn-block" onClick={this.onButtonClick} style={{backgroundColor: '#004d40'}}>Register</button>
+                            <TextField
+                                    label="Username" margin="dense" variant="outlined"
+                                    inputRef={input => this.username = input}
+                                    style={{width:'100%', marginBottom: 10}}
+                            />
+
+                            <TextField
+                                    label="Password" margin="dense" variant="outlined"
+                                    inputRef={input => this.password = input}
+                                    style={{width:'100%', marginBottom: 10}}
+                                    type='password'
+                            />
+
+                            <TextField
+                                    label="Name" margin="dense" variant="outlined"
+                                    inputRef={input => this.name = input}
+                                    style={{width:'100%', marginBottom: 10}}
+                            />
+
+                            <TextField
+                                    label="Email" margin="dense" variant="outlined"
+                                    inputRef={input => this.email = input}
+                                    style={{width:'100%', marginBottom: 20}}
+                            />
+
+                            <div style={{marginBottom: 20, fontWeight: 'bold', color: 'red'}}>{this.state.error}</div>
+
+                            <button className="btn btn-success btn-block" onClick={this.onButtonClick} style={{backgroundColor: '#004d40'}}>Register</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        )}else{
+            )
+        }else{
             return(
                 <Redirect to='/'></Redirect>
             )

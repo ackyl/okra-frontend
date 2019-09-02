@@ -28,6 +28,7 @@ class AllTrans extends Component {
 
     renderList = () => {
 
+        if(this.state.trans[0] !== undefined){
         return this.state.trans.map( (item, key) => {
 
             let status = ''
@@ -69,6 +70,13 @@ class AllTrans extends Component {
                 </div>
             )
         })
+        }else{
+            return(
+                <div style = {{width: '100%', textAlign: 'center', marginTop: 40}}>
+                    <div style={{fontSize: 20, fontWeight: 'bold'}}>No Transaction Yet.</div>
+                </div>
+            )
+        }
 
     }
 

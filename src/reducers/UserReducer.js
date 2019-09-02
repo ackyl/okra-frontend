@@ -29,6 +29,9 @@ export default (data = init, action) => {
         case 'REGISTER_ERROR':
             return{...data, ...init, error: action.payload}
 
+        case 'LOGIN_ERROR':
+            return{...data, ...init, error: action.payload}
+
         case 'LOGOUT':
             return{...data, ...init}
 

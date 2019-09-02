@@ -39,7 +39,7 @@ class Header extends Component {
     this.props.onLogout()
   }
 
-  componentDidMount(){
+  componentDidUpdate(){
     console.log(this.props.user)
   }
 
@@ -53,6 +53,8 @@ class Header extends Component {
                   Okra Record Store
                 </Link>
               </Typography>
+
+              <div style = {{fontSize: 14, color: 'red', fontWeight: 'bold', marginRight: 20}}>{this.props.user.error}</div>
 
               <InputBase
                 placeholder="Username"
@@ -68,6 +70,8 @@ class Header extends Component {
                 inputRef={input => this.password = input}
                 style={{color: '#000000'}}
               />
+
+              
 
               <Link to="/" onClick={this.onClickLogin} style={{color: '#000000'}}>
                 <Button color="inherit">Login</Button>

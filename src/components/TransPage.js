@@ -38,6 +38,9 @@ class TransPage extends Component {
 
     renderList = () => {
 
+        console.log(this.state.trans[0])
+
+        if(this.state.trans[0] !== undefined){
         return this.state.trans.map( (item, key) => {
 
             const num = key + 1
@@ -79,10 +82,18 @@ class TransPage extends Component {
                 </div>
             )
         })
+        }else{
+            return(
+                <div style = {{width: '100%', textAlign: 'center', marginTop: 40}}>
+                    <div style={{fontSize: 20, fontWeight: 'bold'}}>No Transaction Yet.</div>
+                </div>
+            )
+        }
 
     }
 
     renderList2 = () => {
+        if(this.state.verify[0] !== undefined){
         return this.state.verify.map( (item, key) => {
             
             var formatter = new Intl.NumberFormat('en-US', {
@@ -106,6 +117,13 @@ class TransPage extends Component {
                 </div>
             )
         })
+        }else{
+            return(
+                <div style = {{width: '100%', textAlign: 'center', marginTop: 40}}>
+                    <div style={{fontSize: 20, fontWeight: 'bold'}}>No Transaction Yet.</div>
+                </div>
+            )
+        }
     }
 
     render() {
